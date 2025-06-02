@@ -3,7 +3,6 @@ package com.codewithkhang.learnspring.dto.request;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.time.LocalDate;
 import java.util.Set;
 
 @Data
@@ -11,10 +10,8 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserUpdateRequest {
-    String password;
-    String firstName;
-    String lastName;
-    LocalDate dob;
-    Set<String> roles;
+public class RoleRequest {
+    String name;
+    String description;
+    Set<String> permissions;
 }

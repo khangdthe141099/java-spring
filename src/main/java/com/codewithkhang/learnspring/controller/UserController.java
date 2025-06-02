@@ -6,13 +6,17 @@ import com.codewithkhang.learnspring.dto.request.UserUpdateRequest;
 import com.codewithkhang.learnspring.entity.User;
 import com.codewithkhang.learnspring.service.UserService;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/users")
+@Slf4j
 public class UserController {
     @Autowired
     private UserService userService;
@@ -26,9 +30,9 @@ public class UserController {
 
     @GetMapping
     ApiResponse<List<User>> getAllUsers() {
-        ApiResponse<List<User>> apiResponse = new ApiResponse<>();
-        apiResponse.setData(userService.getAllUsers());
-        return apiResponse;
+        return ApiResponse.<List<User>>builder()
+                .data(userService.getAllUsers())
+                .build();
     }
 
     @GetMapping("/{id}")
@@ -36,8 +40,8 @@ public class UserController {
         ApiResponse<User> apiResponse = new ApiResponse<>();
         apiResponse.setData(userService.getUserById(id));
         return apiResponse;
-    }
 
+    }
     @PutMapping("/{id}")
     ApiResponse<User> updateUser(@PathVariable String id, @RequestBody UserUpdateRequest request) {
         ApiResponse<User> apiResponse = new ApiResponse<>();
